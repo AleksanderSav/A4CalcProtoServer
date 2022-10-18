@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const router = require("./router/indexRouter");
+const indexRouter = require("./router/indexRouter");
 
 app.use("/", express.static("./public"));
 app.use(express.json());
 // app.use("/api", () => {
 //    console.log("ok");
 // });
-app.use("/api", router);
+app.use("/api", indexRouter);
 
 app.listen(process.env.APP_PORT, process.env.APP_IP);
 app.listen((err) => {
