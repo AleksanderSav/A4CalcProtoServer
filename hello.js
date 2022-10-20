@@ -3,6 +3,7 @@ const app = express();
 require("dotenv").config();
 const indexRouter = require("./router/indexRouter");
 const sequelize = require("./db_connection/sequelize");
+const models = require("./dbModels/dbModels");
 
 app.use("/", express.static("./public"));
 app.use(express.json());
