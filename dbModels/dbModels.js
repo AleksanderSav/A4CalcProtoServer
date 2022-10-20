@@ -4,6 +4,7 @@ const { DataTypes } = require("sequelize");
 const ToDo = sequelize.define("todo", {
    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
    message: { type: DataTypes.STRING },
+   randomNumber: { type: DataTypes.INTEGER },
 });
 
 module.exports = { ToDo };
