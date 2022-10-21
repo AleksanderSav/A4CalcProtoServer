@@ -5,6 +5,7 @@ class TodoController {
       try {
          const toDo = await ToDo.findAll();
          res.json(toDo);
+
       } catch (e) {
          console.log(e);
       }

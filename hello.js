@@ -4,7 +4,9 @@ require("dotenv").config();
 const indexRouter = require("./router/indexRouter");
 const sequelize = require("./db_connection/sequelize");
 const models = require("./dbModels/dbModels");
+const cors = require('cors')
 
+app.use(cors())
 app.use("/", express.static("./public"));
 app.use(express.json());
 app.use("/api", indexRouter);
