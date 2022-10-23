@@ -5,7 +5,6 @@ class TodoController {
       try {
          const toDo = await ToDo.findAll();
          res.json(toDo);
-
       } catch (e) {
          console.log(e);
       }
@@ -21,6 +20,7 @@ class TodoController {
    }
    async todoRemove(req, res) {
       try {
+         console.log(req.body)
          const { randomNumber } = req.body;
          const toDo = await ToDo.destroy({ where: { randomNumber } });
          return res.json(toDo);
