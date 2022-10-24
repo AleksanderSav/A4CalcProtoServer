@@ -28,6 +28,21 @@ class TodoController {
          console.log(e);
       }
    }
+   async todoUpdate(req,res){
+      try{
+         console.log("put")
+         const {randomNumber,message} = req.body
+         console.log(message)
+         const find = await ToDo.findOne({where:{randomNumber}})
+         await find.update({
+           message: message
+         })
+         res.json(find)
+      }catch (e){
+
+      }
+
+   }
 }
 
 module.exports = new TodoController();
