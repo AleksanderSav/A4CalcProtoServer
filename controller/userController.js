@@ -61,6 +61,14 @@ class UserController {
          console.log(e);
       }
    }
+   ////////////////////////////////////////
+   async loginUser(req, res) {
+      try {
+         res.json({ message: "login" });
+      } catch (e) {
+         console.log(e);
+      }
+   }
    ////////////////////////////////////////////
    async updateUser(req, res) {
       try {
