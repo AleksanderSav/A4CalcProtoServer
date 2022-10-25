@@ -11,7 +11,12 @@ class UserController {
    /////////////////////////////////////////////
    async getOneUser(req, res) {
       try {
-         return res.json({ message: "Get one" });
+         const { id } = req.params;
+         const findOne = await User.findOne({ where: { id } });
+         if (findOne === null) {
+            return res.json("User is not found");
+         }
+         return res.json(findOne);
       } catch (e) {
          console.log(e);
       }
@@ -19,7 +24,8 @@ class UserController {
    ///////////////////////////////////////
    async getAllUsers(req, res) {
       try {
-         return res.json({ message: "Get All" });
+         const allUsers = await User.findAll();
+         return res.json(allUsers);
       } catch (e) {
          console.log(e);
       }
