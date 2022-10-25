@@ -30,10 +30,11 @@ class TodoController {
    }
    async todoUpdate(req, res) {
       try {
-         const { randomNumber, message } = req.body;
+         const { randomNumber, message,highPriority } = req.body;
          const find = await ToDo.findOne({ where: { randomNumber } });
          await find.update({
             message: message,
+            highPriority:highPriority
          });
          res.json(find);
       } catch (e) {
