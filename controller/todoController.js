@@ -38,7 +38,9 @@ class TodoController {
             message: message,
          });
          res.json(find);
-      } catch (e) {}
+      } catch (e) {
+         console.log(e);
+      }
    }
 }
 

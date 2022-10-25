@@ -1,4 +1,14 @@
+const { User } = require("../dbModels/dbModels");
+const jwt = require("jsonwebtoken");
+
+const generateJWT = (id, email, alias, role, priceCategory) => {
+   return jwt.sign({ id, email, alias, role, priceCategory }, "1234", {
+      expiresIn: "24h",
+   });
+};
+
 class UserController {
+   /////////////////////////////////////////////
    async getOneUser(req, res) {
       try {
          return res.json({ message: "Get one" });
@@ -6,6 +16,7 @@ class UserController {
          console.log(e);
       }
    }
+   ///////////////////////////////////////
    async getAllUsers(req, res) {
       try {
          return res.json({ message: "Get All" });
@@ -13,13 +24,38 @@ class UserController {
          console.log(e);
       }
    }
+   /////////////////////////////////////////
    async createUser(req, res) {
       try {
-         return res.json({ message: "Create" });
+         const { email, password, alias, role, priceCategory } = req.body;
+         if (!email || !password) {
+            return res.json({ message: "Enter login and passwor" });
+         }
+         const candidate = await User.findOne({ where: { email } });
+         if (candidate) {
+            return res.json({ message: "User already exist " });
+         }
+
+         const user = await User.create({
+            email,
+            password,
+            alias,
+            role,
+            priceCategory,
+         });
+         const token = generateJWT(
+            user.id,
+            user.email,
+            user.alias,
+            user.role,
+            user.priceCategory
+         );
+         return res.json({ token });
       } catch (e) {
          console.log(e);
       }
    }
+   ////////////////////////////////////////////
    async updateUser(req, res) {
       try {
          return res.json({ message: "Update" });
@@ -27,6 +63,7 @@ class UserController {
          console.log(e);
       }
    }
+   /////////////////////////////////////////////////
    async removeUser(req, res) {
       try {
          return res.json({ message: "Remove" });
