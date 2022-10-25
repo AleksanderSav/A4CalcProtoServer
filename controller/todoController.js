@@ -20,7 +20,7 @@ class TodoController {
    }
    async todoRemove(req, res) {
       try {
-         console.log(req.body)
+         console.log(req.body);
          const { randomNumber } = req.body;
          const toDo = await ToDo.destroy({ where: { randomNumber } });
          return res.json(toDo);
@@ -28,20 +28,17 @@ class TodoController {
          console.log(e);
       }
    }
-   async todoUpdate(req,res){
-      try{
-         console.log("put")
-         const {randomNumber,message} = req.body
-         console.log(message)
-         const find = await ToDo.findOne({where:{randomNumber}})
+   async todoUpdate(req, res) {
+      try {
+         console.log("put");
+         const { randomNumber, message } = req.body;
+         console.log(message);
+         const find = await ToDo.findOne({ where: { randomNumber } });
          await find.update({
-           message: message
-         })
-         res.json(find)
-      }catch (e){
-
-      }
-
+            message: message,
+         });
+         res.json(find);
+      } catch (e) {}
    }
 }
 

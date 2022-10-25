@@ -1,35 +1,35 @@
 class UserController {
    async getOneUser(req, res) {
       try {
-         console.log("Get one");
+         return res.json({ message: "Get one" });
       } catch (e) {
          console.log(e);
       }
    }
-   async getAllUsers() {
-      console.log("Get all");
+   async getAllUsers(req, res) {
       try {
+         return res.json({ message: "Get All" });
       } catch (e) {
          console.log(e);
       }
    }
-   async createUser() {
-      console.log("Create user");
+   async createUser(req, res) {
       try {
+         return res.json({ message: "Create" });
       } catch (e) {
          console.log(e);
       }
    }
-   async updateUser() {
-      console.log("Update user");
+   async updateUser(req, res) {
       try {
+         return res.json({ message: "Update" });
       } catch (e) {
          console.log(e);
       }
    }
-   async removeUser() {
-      console.log("Remove user");
+   async removeUser(req, res) {
       try {
+         return res.json({ message: "Remove" });
       } catch (e) {
          console.log(e);
       }
