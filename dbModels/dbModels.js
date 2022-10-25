@@ -6,6 +6,7 @@ const ToDo = sequelize.define("todo", {
    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
    message: { type: DataTypes.STRING },
    randomNumber: { type: DataTypes.INTEGER },
+   highPriority: { type: DataTypes.BOOLEAN }
 });
 //////////////////////USER MODEL/////////////////////////////////
 const User = sequelize.define("user", {

@@ -11,8 +11,8 @@ class TodoController {
    }
    async todoPost(req, res) {
       try {
-         const { message, randomNumber } = req.body;
-         const toDo = await ToDo.create({ message, randomNumber });
+         const { message, randomNumber,highPriority } = req.body;
+         const toDo = await ToDo.create({ message, randomNumber,highPriority });
          return res.json(toDo);
       } catch (e) {
          console.log(e);
