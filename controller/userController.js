@@ -64,7 +64,22 @@ class UserController {
    ////////////////////////////////////////
    async loginUser(req, res) {
       try {
-         res.json({ message: "login" });
+         const { email, password } = req.body;
+         const user = await User.findOne({ where: { email } });
+         if (!user) {
+            res.json({ message: "User not found" });
+         }
+         if (password !== user.password) {
+            res.json({ message: "Password error" });
+         }
+         const token = generateJWT(
+            user.id,
+            user.email,
+            user.alias,
+            user.role,
+            user.priceCategory
+         );
+         res.json({ token });
       } catch (e) {
          console.log(e);
       }
