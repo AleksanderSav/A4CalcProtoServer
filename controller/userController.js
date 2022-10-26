@@ -87,7 +87,16 @@ class UserController {
    ////////////////////////////////////////////
    async updateUser(req, res) {
       try {
-         return res.json({ message: "Update" });
+         const { email, password, alias, role, priceCategory } = req.body;
+         const user = await User.findOne({ where: { email } });
+         await user.update({
+            email: email,
+            password: password,
+            alias: alias,
+            role: role,
+            priceCategory: priceCategory,
+         });
+         return res.json(user);
       } catch (e) {
          console.log(e);
       }
