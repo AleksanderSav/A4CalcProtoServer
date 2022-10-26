@@ -104,7 +104,9 @@ class UserController {
    /////////////////////////////////////////////////
    async removeUser(req, res) {
       try {
-         return res.json({ message: "Remove" });
+         const { email } = req.body;
+         const user = await User.destroy({ where: { email } });
+         return res.json(user);
       } catch (e) {
          console.log(e);
       }
