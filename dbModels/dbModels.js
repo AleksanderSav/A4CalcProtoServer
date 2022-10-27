@@ -6,7 +6,7 @@ const ToDo = sequelize.define("todo", {
    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
    message: { type: DataTypes.STRING },
    randomNumber: { type: DataTypes.INTEGER },
-   highPriority: { type: DataTypes.BOOLEAN }
+   highPriority: { type: DataTypes.BOOLEAN },
 });
 //////////////////////USER MODEL/////////////////////////////////
 const User = sequelize.define("user", {
@@ -17,5 +17,14 @@ const User = sequelize.define("user", {
    role: { type: DataTypes.STRING },
    priceCategory: { type: DataTypes.STRING },
 });
+//////////////////PRICE MODEL///////////////////
+const PriceList = sequelize.define("priceList", {
+   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+   vinyl: { type: DataTypes.INTEGER },
+   vinylPC: { type: DataTypes.INTEGER },
+   banner: { type: DataTypes.INTEGER },
+   photoPapper: { type: DataTypes.INTEGER },
+});
+
 ////////////////////
-module.exports = { ToDo, User };
+module.exports = { ToDo, User, PriceList };

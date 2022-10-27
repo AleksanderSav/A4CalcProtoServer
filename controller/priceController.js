@@ -1,16 +1,24 @@
+const { PriceList } = require("../dbModels/dbModels");
+
 class PriceController {
    async getPrice(req, res) {
       try {
-         console.log("ok");
-         return res.json({ message: "Get price" });
+         const findPrice = await PriceList.findAll();
+         return res.json(findPrice);
       } catch (e) {
          console.log(e);
       }
    }
    async postPrice(req, res) {
       try {
-         console.log("ok");
-         return res.json({ message: "Post price" });
+         const { vinyl, vinylPC, banner, photoPapper } = req.body;
+         const priceList = await PriceList.create({
+            vinyl,
+            vinylPC,
+            banner,
+            photoPapper,
+         });
+         return res.json(priceList);
       } catch (e) {
          console.log(e);
       }
