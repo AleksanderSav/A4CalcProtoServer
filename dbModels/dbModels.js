@@ -20,6 +20,7 @@ const User = sequelize.define("user", {
 //////////////////PRICE MODEL///////////////////
 const PriceList = sequelize.define("priceList", {
    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+   priceCategory: {type:DataTypes.STRING},
    vinyl: { type: DataTypes.INTEGER },
    vinylPC: { type: DataTypes.INTEGER },
    banner: { type: DataTypes.INTEGER },

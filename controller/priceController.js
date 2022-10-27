@@ -2,9 +2,9 @@ const { where } = require("sequelize");
 const { PriceList } = require("../dbModels/dbModels");
 
 class PriceController {
-   async getPrice(req, res) {
+   async getPrice(req, res) { //Розничный прайс лист ищется по полю priceCategory с ключем "retail"
       try {
-         const findPrice = await PriceList.findAll();
+         const findPrice = await PriceList.findOne({where: {priceCategory:"retail"}});
          return res.json(findPrice);
       } catch (e) {
          console.log(e);
@@ -12,8 +12,9 @@ class PriceController {
    }
    async postPrice(req, res) {
       try {
-         const { vinyl, vinylPC, banner, photoPapper } = req.body;
+         const {priceCategory, vinyl, vinylPC, banner, photoPapper } = req.body;
          const priceList = await PriceList.create({
+            priceCategory,
             vinyl,
             vinylPC,
             banner,
