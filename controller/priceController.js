@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const { PriceList } = require("../dbModels/dbModels");
 
 class PriceController {
@@ -25,8 +26,16 @@ class PriceController {
    }
    async updatePrice(req, res) {
       try {
-         console.log("ok");
-         return res.json({ message: "Update price" });
+         const { vinyl, vinylPC, banner, photoPapper } = req.body;
+         const updatePrice = await PriceList.findOne({ where: { banner } });
+         console.log(updatePrice);
+         await updatePrice.update({
+            vinyl: vinyl,
+            vinylPC: vinylPC,
+            banner: banner,
+            photoPapper: photoPapper,
+         });
+         return res.json(updatePrice);
       } catch (e) {
          console.log(e);
       }
