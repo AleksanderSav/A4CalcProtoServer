@@ -35,7 +35,7 @@ class UserController {
       try {
          const { email, password, alias, role, priceCategory } = req.body;
          if (!email || !password) {
-            return res.json({ message: "Enter login and passwor" });
+            return res.json({ message: "Enter login and password" });
          }
          const candidate = await User.findOne({ where: { email } });
          if (candidate) {
