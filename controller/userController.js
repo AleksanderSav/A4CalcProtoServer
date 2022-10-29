@@ -39,7 +39,7 @@ class UserController {
          }
          const candidate = await User.findOne({ where: { email } });
          if (candidate) {
-            return res.json({ message: "User already exist " });
+           return  res.json({ message: "User already exist " });
          }
 
          const user = await User.create({
@@ -65,6 +65,7 @@ class UserController {
    async loginUser(req, res) {
       try {
          const { email, password } = req.body;
+         console.log(req.body)
          const user = await User.findOne({ where: { email } });
          if (!user) {
             res.json({ message: "User not found" });
