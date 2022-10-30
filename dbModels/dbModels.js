@@ -7,6 +7,8 @@ const ToDo = sequelize.define("todo", {
    message: { type: DataTypes.STRING },
    randomNumber: { type: DataTypes.INTEGER },
    highPriority: { type: DataTypes.BOOLEAN },
+   owner:{type:DataTypes.STRING},
+   createdDate:{type:DataTypes.STRING}
 });
 //////////////////////USER MODEL/////////////////////////////////
 const User = sequelize.define("user", {
