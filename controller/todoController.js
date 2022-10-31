@@ -13,6 +13,9 @@ class TodoController {
    async todoGetByOwner(req,res){
       try{
          const headers = req.headers.authorization.split(" ")[1]
+         if(!headers){
+            res.json({message:"no jwt"})
+         }
          const decoded = jwt.verify(headers, "1234")
          const findTodo = await ToDo.findAll({where:{owner:decoded.alias}})
          res.json(findTodo)
