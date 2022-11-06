@@ -37,20 +37,20 @@ const Order = sequelize.define("order", {
 });
 const OrderItem = sequelize.define("orderItem", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  width: { type: DataTypes.STRING },
-  height: { type: DataTypes.STRING },
+  width: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
+  height: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
   description: { type: DataTypes.STRING },
   count: { type: DataTypes.INTEGER },
   material: { type: DataTypes.STRING },
   lamination: { type: DataTypes.BOOLEAN },
   borderCut: { type: DataTypes.BOOLEAN },
   orderCategory: { type: DataTypes.STRING },
-  price: { type: DataTypes.INTEGER },
+  price: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
   random: { type: DataTypes.INTEGER },
-  totalArea: { type: DataTypes.INTEGER },
-  onePcsArea: { type: DataTypes.INTEGER },
-  onePcsCost: { type: DataTypes.INTEGER },
-  totalCost: { type: DataTypes.INTEGER },
+  totalArea: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
+  onePcsArea: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
+  onePcsCost: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
+  totalCost: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
 });
 
 ////////////////////
