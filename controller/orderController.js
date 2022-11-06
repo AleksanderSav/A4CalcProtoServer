@@ -21,7 +21,7 @@ class OrderController {
       const date = new Date().toLocaleString();
       const order = await Order.create({
         randomNumber: number,
-        owner: "test",
+        owner: "Администратор",
         createdDate: date,
       });
       ///////////////////////////////
