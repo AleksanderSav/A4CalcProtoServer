@@ -1,5 +1,8 @@
 const { Order, OrderItem } = require("../dbModels/dbModels");
 const path = require("path");
+const fs = require("fs");
+
+const fileNameArray = [];
 
 class OrderController {
   async getAllOrders(req, res) {
@@ -72,8 +75,33 @@ class OrderController {
   }
   async fileUpload(req, res) {
     try {
-      console.log("req.files123");
-      console.log(req.files);
+      const { name } = req.body;
+      const { file } = req.files;
+      const fileExtension = file.name.split(".")[1];
+      await file.mv(
+        path.resolve(__dirname, "..", "FILE", name + "." + fileExtension)
+      );
+      const adr = path.resolve(
+        __dirname,
+        "..",
+        "FILE",
+        name + "." + fileExtension
+      );
+      console.log(adr);
+      fs.rename(
+        adr,
+        path.resolve(__dirname, "..", "test" + "." + fileExtension),
+        (err) => {
+          if (err) throw err; // не удалось переместить файл
+          console.log("Файл успешно перемещён");
+        }
+      );
+
+      // fs.mkdir(path.resolve(__dirname, "..", name), (err) => {
+      //   if (err) throw err; // не удалось создать папку
+      //   console.log("Папка успешно создана");
+      // });
+      res.json(name);
     } catch (e) {
       console.log(e);
     }
