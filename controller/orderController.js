@@ -87,7 +87,7 @@ class OrderController {
         "FILE",
         name + "." + fileExtension
       );
-      console.log(adr);
+      console.log(adr); //// отправить путь до файла в массив что бы потом при создании файла пробежать по массиву и переместить все файлы
       fs.rename(
         adr,
         path.resolve(__dirname, "..", "test" + "." + fileExtension),
@@ -96,6 +96,7 @@ class OrderController {
           console.log("Файл успешно перемещён");
         }
       );
+      /////
 
       // fs.mkdir(path.resolve(__dirname, "..", name), (err) => {
       //   if (err) throw err; // не удалось создать папку
