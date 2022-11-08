@@ -1,4 +1,5 @@
 const { Order, OrderItem } = require("../dbModels/dbModels");
+const path = require("path");
 
 class OrderController {
   async getAllOrders(req, res) {
@@ -65,6 +66,14 @@ class OrderController {
         });
       });
       res.json(order);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async fileUpload(req, res) {
+    try {
+      console.log("req.files123");
+      console.log(req.files);
     } catch (e) {
       console.log(e);
     }
