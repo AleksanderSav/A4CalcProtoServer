@@ -87,7 +87,7 @@ class OrderController {
         "FILE",
         name + "." + fileExtension
       );
-      console.log(adr); //// отправить путь до файла в массив что бы потом при создании файла пробежать по массиву и переместить все файлы
+      console.log(adr); //// отправить путь до файла в массив что бы потом при создании заказа пробежать по массиву и переместить все файлы
       fs.rename(
         adr,
         path.resolve(__dirname, "..", "test" + "." + fileExtension),
