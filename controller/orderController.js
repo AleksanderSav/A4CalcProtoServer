@@ -75,34 +75,49 @@ class OrderController {
   }
   async fileUpload(req, res) {
     try {
-      const { name } = req.body;
+      const { material, width, height, count, random } = req.body;
+      const name = `${material}_${width}x${height}_${count}шт__${random}`;
       const { file } = req.files;
+      console.log(req.files);
       const fileExtension = file.name.split(".")[1];
       await file.mv(
-        path.resolve(__dirname, "..", "FILE", name + "." + fileExtension)
+        path.resolve(
+          __dirname,
+          "..",
+          "ORDERS",
+          "FILE",
+          name + "." + fileExtension
+        )
       );
       const adr = path.resolve(
         __dirname,
         "..",
+        "ORDERS",
         "FILE",
         name + "." + fileExtension
       );
       console.log(adr); //// отправить путь до файла в массив что бы потом при создании заказа пробежать по массиву и переместить все файлы
-      fs.rename(
-        adr,
-        path.resolve(__dirname, "..", "test" + "." + fileExtension),
-        (err) => {
-          if (err) throw err; // не удалось переместить файл
-          console.log("Файл успешно перемещён");
-        }
-      );
+      // fs.rename( Перемещение из папки в другую папку
+      //   adr,
+      //   path.resolve(
+      //     __dirname,
+      //     "..",
+      //     "ORDERS",
+      //     "MOVED",
+      //     "moved" + "." + fileExtension
+      //   ),
+      //   (err) => {
+      //     if (err) throw err; // не удалось переместить файл
+      //     console.log("Файл успешно перемещён");
+      //   }
+      // );
       /////
 
       // fs.mkdir(path.resolve(__dirname, "..", name), (err) => {
       //   if (err) throw err; // не удалось создать папку
       //   console.log("Папка успешно создана");
       // });
-      res.json(name);
+      res.json(adr);
     } catch (e) {
       console.log(e);
     }
