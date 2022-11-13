@@ -29,12 +29,11 @@ class OrderController {
         createdDate: date,
       });
       const orderDirPath = path.resolve(__dirname, "..", "ORDERS", number);
-      fs.mkdirSync(orderDirPath, { recursive: true });
+      await fs.mkdirSync(orderDirPath, { recursive: true });
       ///////////////////////////////
       const findCurrentOrder = await Order.findOne({
         where: { randomNumber: number },
       });
-      console.log(findCurrentOrder.id);
       orderItems.forEach(async (el) => {
         let {
           width,
@@ -69,19 +68,29 @@ class OrderController {
           totalCost,
           orderId: findCurrentOrder.id,
         });
-        orderItems.forEach((file) => {
-          let test = file.path.split(".");
-          let ex = test[test.length - 1];
-          console.log(ex);
-          fs.rename(
-            file.path,
-            path.resolve(orderDirPath, "movedTEST" + "." + ex),
-            (err) => {
-              if (err) throw err; // не удалось переместить файл
-              console.log("Файл успешно перемещён");
-            }
-          );
-        });
+      });
+      orderItems.forEach((file) => {
+        let test = file.path.split(".");
+        let ex = test[test.length - 1];
+        console.log(file.path);
+        fs.renameSync(
+          file.path,
+          path.resolve(
+            orderDirPath,
+            file.material +
+              "_" +
+              file.width +
+              "x" +
+              file.height +
+              "_" +
+              file.count +
+              "шт" +
+              "_" +
+              (Math.random() * 10000).toFixed() +
+              "." +
+              ex
+          )
+        );
       });
       res.json(order);
     } catch (e) {
