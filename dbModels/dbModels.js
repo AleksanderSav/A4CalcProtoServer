@@ -51,6 +51,7 @@ const OrderItem = sequelize.define("orderItem", {
   onePcsArea: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
   onePcsCost: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
   totalCost: { type: DataTypes.FLOAT }, /////старое значение INTEGER (есть проблемы с добавление в базу чисел с плавающей запятой)
+  path: { type: DataTypes.STRING },
 });
 
 ////////////////////

@@ -50,6 +50,7 @@ class OrderController {
           onePcsArea,
           onePcsCost,
           totalCost,
+          path,
         } = el;
         const orderItem = await OrderItem.create({
           width,
@@ -66,6 +67,7 @@ class OrderController {
           onePcsArea,
           onePcsCost,
           totalCost,
+          path,
           orderId: findCurrentOrder.id,
         });
       });
