@@ -2,8 +2,6 @@ const { Order, OrderItem } = require("../dbModels/dbModels");
 const path = require("path");
 const fs = require("fs");
 
-const fileNameArray = [];
-
 class OrderController {
   async getAllOrders(req, res) {
     try {
@@ -50,8 +48,28 @@ class OrderController {
           onePcsArea,
           onePcsCost,
           totalCost,
-          path,
+          filePath,
         } = el;
+        let test = el.filePath.split(".");
+        let ex = test[test.length - 1];
+        console.log(el.path);
+
+        let newName = path.resolve(
+          orderDirPath,
+          el.material +
+            "_" +
+            el.width +
+            "x" +
+            el.height +
+            "_" +
+            el.count +
+            "шт" +
+            "_" +
+            (Math.random() * 10000).toFixed() +
+            "." +
+            ex
+        );
+        fs.renameSync(el.filePath, path.resolve(orderDirPath, newName));
         const orderItem = await OrderItem.create({
           width,
           height,
@@ -67,33 +85,33 @@ class OrderController {
           onePcsArea,
           onePcsCost,
           totalCost,
-          path,
+          filePath: newName,
           orderId: findCurrentOrder.id,
         });
       });
-      orderItems.forEach((file) => {
-        let test = file.path.split(".");
-        let ex = test[test.length - 1];
-        console.log(file.path);
-        fs.renameSync(
-          file.path,
-          path.resolve(
-            orderDirPath,
-            file.material +
-              "_" +
-              file.width +
-              "x" +
-              file.height +
-              "_" +
-              file.count +
-              "шт" +
-              "_" +
-              (Math.random() * 10000).toFixed() +
-              "." +
-              ex
-          )
-        );
-      });
+      // orderItems.forEach((file) => {
+      //   let test = file.path.split(".");
+      //   let ex = test[test.length - 1];
+      //   console.log(file.path);
+      //   fs.renameSync(
+      //     file.path,
+      //     path.resolve(
+      //       orderDirPath,
+      //       file.material +
+      //         "_" +
+      //         file.width +
+      //         "x" +
+      //         file.height +
+      //         "_" +
+      //         file.count +
+      //         "шт" +
+      //         "_" +
+      //         (Math.random() * 10000).toFixed() +
+      //         "." +
+      //         ex
+      //     )
+      //   );
+      // });
       res.json(order);
     } catch (e) {
       console.log(e);
@@ -144,6 +162,13 @@ class OrderController {
       //   console.log("Папка успешно создана");
       // });
       res.json(adr);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async fileDownload(req, res) {
+    try {
+      res.download(req.query.path);
     } catch (e) {
       console.log(e);
     }
