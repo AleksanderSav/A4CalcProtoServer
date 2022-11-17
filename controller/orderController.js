@@ -18,12 +18,16 @@ class OrderController {
   }
   async createOrder(req, res) {
     try {
+      //TODO ПАДАЕТ ЕСЛИ НЕ ПРИХОДИТ ФАЙЛ С КЛИЕНТА
       const orderItems = req.body.data;
+      //const { owner, author } = req.body.data;
+      console.log(orderItems);
       const number = (Math.random() * 100000).toFixed();
       const date = new Date().toLocaleString();
       const order = await Order.create({
         randomNumber: number,
-        owner: "Администратор",
+        owner: orderItems[0].orderOwner,
+        author: orderItems[0].orderAuthor,
         createdDate: date,
       });
       const orderDirPath = path.resolve(__dirname, "..", "ORDERS", number);

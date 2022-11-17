@@ -33,6 +33,7 @@ const Order = sequelize.define("order", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   randomNumber: { type: DataTypes.INTEGER },
   owner: { type: DataTypes.STRING },
+  author: { type: DataTypes.STRING },
   createdDate: { type: DataTypes.STRING },
 });
 const OrderItem = sequelize.define("orderItem", {
