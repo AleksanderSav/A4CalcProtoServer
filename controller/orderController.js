@@ -5,13 +5,20 @@ const fs = require("fs");
 class OrderController {
   async getAllOrders(req, res) {
     try {
-      const findAll = await Order.findAll({
+      let { limit, page } = req.query;
+      limit = limit || 5;
+      page = page || 1;
+      const offset = page * limit - limit;
+      const findAll = await Order.findAndCountAll({
+        limit,
+        offset,
         include: {
           model: OrderItem,
         },
       });
-      console.log(findAll);
-      res.json(findAll);
+      const countPages = await Order.findAndCountAll({});
+      console.log(countPages);
+      res.json({ findAll, countPages });
     } catch (e) {
       console.log(e);
     }
