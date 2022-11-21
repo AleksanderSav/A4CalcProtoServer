@@ -34,6 +34,9 @@ const Order = sequelize.define("order", {
   randomNumber: { type: DataTypes.INTEGER },
   owner: { type: DataTypes.STRING },
   author: { type: DataTypes.STRING },
+  orderTotalCost: { type: DataTypes.FLOAT },
+  orderStatus: { type: DataTypes.STRING },
+  orderMessage: { type: DataTypes.STRING },
   createdDate: { type: DataTypes.STRING },
 });
 const OrderItem = sequelize.define("orderItem", {

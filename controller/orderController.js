@@ -15,6 +15,7 @@ class OrderController {
         include: {
           model: OrderItem,
         },
+        order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
       });
       const countPages = await Order.findAndCountAll({});
       console.log(countPages);
@@ -27,6 +28,7 @@ class OrderController {
     try {
       //TODO ПАДАЕТ ЕСЛИ НЕ ПРИХОДИТ ФАЙЛ С КЛИЕНТА
       const orderItems = req.body.data;
+      const orderMessage = req.body.orderMessage;
       //const { owner, author } = req.body.data;
       console.log(orderItems);
       const number = (Math.random() * 100000).toFixed();
@@ -35,6 +37,11 @@ class OrderController {
         randomNumber: number,
         owner: orderItems[0].orderOwner,
         author: orderItems[0].orderAuthor,
+        orderTotalCost: orderItems.reduce(function (sum, orderItem) {
+          return sum + orderItem.totalCost;
+        }, 0),
+        orderMessage: orderMessage,
+        orderStatus: "Заказ создан",
         createdDate: date,
       });
       const orderDirPath = path.resolve(__dirname, "..", "ORDERS", number);
