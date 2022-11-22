@@ -24,12 +24,36 @@ class OrderController {
       console.log(e);
     }
   }
+  async getNotPaidOrders(req, res) {
+    try {
+      let { limit, page } = req.query;
+      limit = limit || 5;
+      page = page || 1;
+      const offset = page * limit - limit;
+      const findAllNotPaid = await Order.findAndCountAll({
+        limit,
+        offset,
+        where: {
+          orderPaid: false,
+        },
+        order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
+      });
+      const countPages = await Order.findAndCountAll({
+        where: {
+          orderPaid: false,
+        },
+      });
+      console.log(countPages);
+      res.json({ findAllNotPaid, countPages });
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async createOrder(req, res) {
     try {
       //TODO ПАДАЕТ ЕСЛИ НЕ ПРИХОДИТ ФАЙЛ С КЛИЕНТА
       const orderItems = req.body.data;
       const orderMessage = req.body.orderMessage;
-      //const { owner, author } = req.body.data;
       console.log(orderItems);
       const number = (Math.random() * 100000).toFixed();
       const date = new Date().toLocaleString();
@@ -43,6 +67,7 @@ class OrderController {
         orderMessage: orderMessage,
         orderStatus: "Заказ создан",
         createdDate: date,
+        orderPaid: false,
       });
       const orderDirPath = path.resolve(__dirname, "..", "ORDERS", number);
       await fs.mkdirSync(orderDirPath, { recursive: true });
@@ -107,29 +132,6 @@ class OrderController {
           orderId: findCurrentOrder.id,
         });
       });
-      // orderItems.forEach((file) => {
-      //   let test = file.path.split(".");
-      //   let ex = test[test.length - 1];
-      //   console.log(file.path);
-      //   fs.renameSync(
-      //     file.path,
-      //     path.resolve(
-      //       orderDirPath,
-      //       file.material +
-      //         "_" +
-      //         file.width +
-      //         "x" +
-      //         file.height +
-      //         "_" +
-      //         file.count +
-      //         "шт" +
-      //         "_" +
-      //         (Math.random() * 10000).toFixed() +
-      //         "." +
-      //         ex
-      //     )
-      //   );
-      // });
       res.json(order);
     } catch (e) {
       console.log(e);

@@ -37,6 +37,7 @@ const Order = sequelize.define("order", {
   orderTotalCost: { type: DataTypes.FLOAT },
   orderStatus: { type: DataTypes.STRING },
   orderMessage: { type: DataTypes.STRING },
+  orderPaid: { type: DataTypes.BOOLEAN },
   createdDate: { type: DataTypes.STRING },
 });
 const OrderItem = sequelize.define("orderItem", {
