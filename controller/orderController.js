@@ -1,4 +1,4 @@
-const { Order, OrderItem } = require("../dbModels/dbModels");
+const { Order, OrderItem, User } = require("../dbModels/dbModels");
 const path = require("path");
 const fs = require("fs");
 
@@ -49,14 +49,58 @@ class OrderController {
       console.log(e);
     }
   }
+  async getCustomersWithNoPaidOrders(req, res) {
+    try {
+      // let { limit, page } = req.query;
+      // limit = limit || 5;
+      // page = page || 1;
+      // const offset = page * limit - limit;
+      // const findAllNotPaid = await Order.findAndCountAll({
+      //   limit,
+      //   offset,
+      //   where: {
+      //     orderPaid: false,
+      //   },
+      //   include: {
+      //     model: User,
+      //   },
+      //   order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
+      // });
+      // const countPages = await Order.findAndCountAll({
+      //   where: {
+      //     orderPaid: false,
+      //   },
+      // });
+      // console.log(countPages);
+      // res.json({ findAllNotPaid, countPages });
+
+      const find = await User.findAll({
+        include: {
+          model: Order,
+          where: {
+            orderPaid: false,
+          },
+        },
+      });
+      res.json(find);
+    } catch (e) {
+      console.log(e);
+    }
+  }
   async createOrder(req, res) {
     try {
       //TODO ПАДАЕТ ЕСЛИ НЕ ПРИХОДИТ ФАЙЛ С КЛИЕНТА
       const orderItems = req.body.data;
       const orderMessage = req.body.orderMessage;
-      console.log(orderItems);
+
       const number = (Math.random() * 100000).toFixed();
       const date = new Date().toLocaleString();
+      const findOrderOwner = await User.findOne({
+        where: {
+          alias: orderItems[0].orderOwner,
+        },
+      });
+      console.log(findOrderOwner);
       const order = await Order.create({
         randomNumber: number,
         owner: orderItems[0].orderOwner,
@@ -68,6 +112,7 @@ class OrderController {
         orderStatus: "Заказ создан",
         createdDate: date,
         orderPaid: false,
+        userId: findOrderOwner.id,
       });
       const orderDirPath = path.resolve(__dirname, "..", "ORDERS", number);
       await fs.mkdirSync(orderDirPath, { recursive: true });

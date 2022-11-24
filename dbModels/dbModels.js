@@ -60,6 +60,8 @@ const OrderItem = sequelize.define("orderItem", {
 });
 
 ////////////////////
+User.hasMany(Order);
+Order.belongsTo(User);
 Order.hasMany(OrderItem);
 OrderItem.belongsTo(Order);
 ///////////////////////////////

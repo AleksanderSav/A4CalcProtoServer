@@ -16,6 +16,7 @@ app.use("/api", indexRouter);
 async function start() {
   try {
     await sequelize.authenticate();
+    // await sequelize.sync({ force: true });
     await sequelize.sync();
   } catch (e) {
     console.log(e);
