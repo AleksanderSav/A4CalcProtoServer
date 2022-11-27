@@ -16,6 +16,20 @@ class FinanceController {
       console.log(e);
     }
   }
+  async makePayment(req, res) {
+    try {
+      const { randomNumber } = req.body;
+      const findOrder = await Order.findOne({
+        where: {
+          randomNumber: randomNumber,
+        },
+      });
+      await findOrder.update({ orderPaid: true });
+      res.json(findOrder);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 module.exports = new FinanceController();

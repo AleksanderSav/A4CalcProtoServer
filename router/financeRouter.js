@@ -6,5 +6,6 @@ router.get(
   "/getCustomersWithNoPaidOrders",
   financeController.getCustomersWithNoPaidOrders
 );
+router.put("/makePayment", financeController.makePayment);
 
 module.exports = router;
