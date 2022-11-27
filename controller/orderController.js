@@ -176,6 +176,16 @@ class OrderController {
       console.log(e);
     }
   }
+  async changeOrderStatus(req, res) {
+    try {
+      const { status, randomNumber } = req.body;
+      const findOrder = await Order.findOne({ where: { randomNumber } });
+      findOrder.update({ orderStatus: status });
+      res.json(findOrder);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 module.exports = new OrderController();
