@@ -24,69 +24,7 @@ class OrderController {
       console.log(e);
     }
   }
-  async getNotPaidOrders(req, res) {
-    try {
-      let { limit, page } = req.query;
-      limit = limit || 5;
-      page = page || 1;
-      const offset = page * limit - limit;
-      const findAllNotPaid = await Order.findAndCountAll({
-        limit,
-        offset,
-        where: {
-          orderPaid: false,
-        },
-        order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
-      });
-      const countPages = await Order.findAndCountAll({
-        where: {
-          orderPaid: false,
-        },
-      });
-      console.log(countPages);
-      res.json({ findAllNotPaid, countPages });
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  async getCustomersWithNoPaidOrders(req, res) {
-    try {
-      // let { limit, page } = req.query;
-      // limit = limit || 5;
-      // page = page || 1;
-      // const offset = page * limit - limit;
-      // const findAllNotPaid = await Order.findAndCountAll({
-      //   limit,
-      //   offset,
-      //   where: {
-      //     orderPaid: false,
-      //   },
-      //   include: {
-      //     model: User,
-      //   },
-      //   order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
-      // });
-      // const countPages = await Order.findAndCountAll({
-      //   where: {
-      //     orderPaid: false,
-      //   },
-      // });
-      // console.log(countPages);
-      // res.json({ findAllNotPaid, countPages });
 
-      const find = await User.findAll({
-        include: {
-          model: Order,
-          where: {
-            orderPaid: false,
-          },
-        },
-      });
-      res.json(find);
-    } catch (e) {
-      console.log(e);
-    }
-  }
   async createOrder(req, res) {
     try {
       //TODO ПАДАЕТ ЕСЛИ НЕ ПРИХОДИТ ФАЙЛ С КЛИЕНТА
