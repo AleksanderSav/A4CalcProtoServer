@@ -1,5 +1,7 @@
 const { User } = require("../dbModels/dbModels");
 const jwt = require("jsonwebtoken");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const generateJWT = (id, email, alias, role, priceCategory) => {
   return jwt.sign({ id, email, alias, role, priceCategory }, "1234", {
@@ -117,6 +119,17 @@ class UserController {
       const { email } = req.body;
       const user = await User.destroy({ where: { email } });
       return res.json(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async search(req, res) {
+    try {
+      const { word } = req.body;
+      const s = await User.findOne({
+        where: { alias: { [Op.like]: "%" + word + "%" } },
+      });
+      return res.json(s);
     } catch (e) {
       console.log(e);
     }

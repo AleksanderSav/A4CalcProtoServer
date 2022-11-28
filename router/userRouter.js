@@ -9,5 +9,6 @@ router.post("/", userController.createUser);
 router.post("/login", userController.loginUser);
 router.put("/", userController.updateUser); ///////
 router.delete("/", userController.removeUser);
+router.post("/search", userController.search);
 
 module.exports = router;
