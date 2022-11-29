@@ -126,8 +126,8 @@ class UserController {
   async search(req, res) {
     try {
       const { word } = req.body;
-      const s = await User.findOne({
-        where: { alias: { [Op.like]: "%" + word + "%" } },
+      const s = await User.findAll({
+        where: { alias: { [Op.iLike]: "%" + word + "%" } },
       });
       return res.json(s);
     } catch (e) {
