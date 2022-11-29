@@ -123,13 +123,50 @@ class UserController {
       console.log(e);
     }
   }
-  async search(req, res) {
+  async searchUser(req, res) {
     try {
       const { word } = req.body;
-      const s = await User.findAll({
+      const search = await User.findAll({
         where: { alias: { [Op.iLike]: "%" + word + "%" } },
       });
-      return res.json(s);
+      return res.json(search);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  ///////////////////////////////////////////
+  async getAllAdmins(req, res) {
+    try {
+      const getAllAdmins = await User.findAll({
+        where: {
+          role: "admin",
+        },
+      });
+      return res.json(getAllAdmins);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async getAllWorkers(req, res) {
+    try {
+      const getAllWorkers = await User.findAll({
+        where: {
+          role: "worker",
+        },
+      });
+      return res.json(getAllWorkers);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async getAllManagers(req, res) {
+    try {
+      const getAllManagers = await User.findAll({
+        where: {
+          role: "manager",
+        },
+      });
+      return res.json(getAllManagers);
     } catch (e) {
       console.log(e);
     }
