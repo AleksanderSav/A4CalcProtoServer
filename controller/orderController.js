@@ -1,7 +1,7 @@
 const { Order, OrderItem, User } = require("../dbModels/dbModels");
 const path = require("path");
 const fs = require("fs");
-const nodemailer = require('nodemailer')
+const nodemailer = require("nodemailer");
 
 class OrderController {
   async getAllOrders(req, res) {
@@ -180,32 +180,48 @@ class OrderController {
   async changeOrderStatus(req, res) {
     try {
       const { status, randomNumber } = req.body;
-      const findOrder = await Order.findOne({ where: { randomNumber } });
-      const findOrderOwner = await User.findOne({include:{model:Order,where: { randomNumber }} }
-        )
-        let transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'a4yug1@gmail.com',
-            pass: 'jpko tvpe bmpu prrx',
-          },
-        })
-        let result = await transporter.sendMail({
-          from: "Node js" ,
-          to:findOrderOwner.email ,
-          subject: 'Message from Node js',
-          text: `Order status ${status}`,
-          html:
-          `Order status ${status}`,
-        })
-        console.log(result);
+      const findOrder = await Order.findOne({
+        include: { model: OrderItem },
+        where: { randomNumber },
+      });
+      const findOrderOwner = await User.findOne({
+        include: {
+          model: Order,
+          where: { randomNumber },
+        },
+      });
       findOrder.update({ orderStatus: status });
+
+      ////////////send to email
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "a4yug1@gmail.com",
+          pass: "jpko tvpe bmpu prrx",
+        },
+      });
+      let result = await transporter.sendMail({
+        from: "Типография А4-ЮГ",
+        to: findOrderOwner.email,
+        subject: `Статус заказа ${randomNumber} изменился  `,
+        html: `<h3>Статус вашего заказа изменился на ${status}</h3> <br>
+                <h3>Здравствуйте,${
+                  findOrderOwner.alias
+                } статус вашего заказа изменился на ${status}</h3>
+                <h3>Состав заказа:</h3><br>
+                <table border="1">
+                ${findOrder.orderItems.map(
+                  (el) =>
+                    `<tr><td style="padding: 20px"><h3>${el.orderCategory}</h3></td><td style="padding: 20px"><h3>${el.width}x${el.height}</h3></td><td style="padding: 20px"><h3>${el.count} штук</h3></td></tr>`
+                )}
+                </table>
+                `,
+      });
       res.json(findOrder);
     } catch (e) {
       console.log(e);
     }
   }
- 
 }
 
 module.exports = new OrderController();
