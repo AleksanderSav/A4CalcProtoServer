@@ -1,6 +1,7 @@
 const { Order, OrderItem, User } = require("../dbModels/dbModels");
 const path = require("path");
 const fs = require("fs");
+const nodemailer = require('nodemailer')
 
 class OrderController {
   async getAllOrders(req, res) {
@@ -180,12 +181,31 @@ class OrderController {
     try {
       const { status, randomNumber } = req.body;
       const findOrder = await Order.findOne({ where: { randomNumber } });
+      const findOrderOwner = await User.findOne({include:{model:Order,where: { randomNumber }} }
+        )
+        let transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'a4yug1@gmail.com',
+            pass: 'jpko tvpe bmpu prrx',
+          },
+        })
+        let result = await transporter.sendMail({
+          from: "Node js" ,
+          to:findOrderOwner.email ,
+          subject: 'Message from Node js',
+          text: `Order status ${status}`,
+          html:
+          `Order status ${status}`,
+        })
+        console.log(result);
       findOrder.update({ orderStatus: status });
       res.json(findOrder);
     } catch (e) {
       console.log(e);
     }
   }
+ 
 }
 
 module.exports = new OrderController();
