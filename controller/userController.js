@@ -35,7 +35,15 @@ class UserController {
   /////////////////////////////////////
   async getAllCustomers(req, res) {
     try {
-      const allUsers = await User.findAll({ where: { role: "customer" } });
+      let { limit, page } = req.query;
+      limit = limit || 5;
+      page = page || 1;
+      const offset = page * limit - limit;
+      const allUsers = await User.findAll({
+        limit,
+        offset,
+        where: { role: "customer" },
+      });
       return res.json(allUsers);
     } catch (e) {
       console.log(e);
@@ -123,6 +131,7 @@ class UserController {
       console.log(e);
     }
   }
+  //////////////////////////////////
   async searchUser(req, res) {
     try {
       const { word } = req.body;
