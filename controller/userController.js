@@ -39,7 +39,7 @@ class UserController {
       limit = limit || 5;
       page = page || 1;
       const offset = page * limit - limit;
-      const allUsers = await User.findAll({
+      const allUsers = await User.findAndCountAll({
         limit,
         offset,
         where: { role: "customer" },
@@ -146,7 +146,7 @@ class UserController {
   ///////////////////////////////////////////
   async getAllAdmins(req, res) {
     try {
-      const getAllAdmins = await User.findAll({
+      const getAllAdmins = await User.findAndCountAll({
         where: {
           role: "admin",
         },
@@ -158,7 +158,7 @@ class UserController {
   }
   async getAllWorkers(req, res) {
     try {
-      const getAllWorkers = await User.findAll({
+      const getAllWorkers = await User.findAndCountAll({
         where: {
           role: "worker",
         },
@@ -170,7 +170,7 @@ class UserController {
   }
   async getAllManagers(req, res) {
     try {
-      const getAllManagers = await User.findAll({
+      const getAllManagers = await User.findAndCountAll({
         where: {
           role: "manager",
         },
