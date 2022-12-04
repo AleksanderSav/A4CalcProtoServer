@@ -14,7 +14,8 @@ class UserController {
   async getOneUser(req, res) {
     try {
       const { id } = req.params;
-      const findOne = await User.findOne({ where: { id } });
+      console.log(id);
+      const findOne = await User.findOne({ where: { alias: id } });
       if (findOne === null) {
         return res.json("User is not found");
       }
@@ -180,6 +181,15 @@ class UserController {
       console.log(e);
     }
   }
+  // async getOneUser(req, res) {
+  //   try {
+  //     const { id } = req.params;
+  //     console.log(id);
+  //     return res.json(id);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 }
 
 module.exports = new UserController();
