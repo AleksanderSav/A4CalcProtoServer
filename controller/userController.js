@@ -191,16 +191,28 @@ class UserController {
   //   }
   // }
   ///////////////////////////
-  async updateUserEmail(req,res){
-    try{
-      const { email,alias } = req.body;
+  async updateUserEmail(req, res) {
+    try {
+      const { email, alias } = req.body;
       const user = await User.findOne({ where: { alias } });
       await user.update({
-        email: email,   
+        email: email,
       });
-      return res.json(user);  
-    }catch(e){
-      console.log(e)
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async updateUserPassword(req, res) {
+    try {
+      const { password, alias } = req.body;
+      const user = await User.findOne({ where: { alias } });
+      await user.update({
+        password: password,
+      });
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
     }
   }
 }

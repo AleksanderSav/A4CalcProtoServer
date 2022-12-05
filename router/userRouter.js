@@ -15,6 +15,6 @@ router.get("/getAllManagers", userController.getAllManagers);
 router.get("/getAllWorkers", userController.getAllWorkers);
 router.get("/getAllCustomers", userController.getAllCustomers);
 //////////////////USER INFO PAGE////////////////////
-router.post("/updateUserEmail",userController.updateUserEmail)
-
+router.post("/updateUserEmail", userController.updateUserEmail);
+router.post("/updateUserPassword", userController.updateUserPassword);
 module.exports = router;

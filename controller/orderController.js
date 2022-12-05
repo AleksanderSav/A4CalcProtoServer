@@ -199,15 +199,15 @@ class OrderController {
         //   user: "a4yug1@gmail.com",
         //   pass: "jpko tvpe bmpu prrx",
         // },
-        host: 'mail.netangels.ru',
+        host: "mail.netangels.ru",
         secure: false,
         auth: {
           user: "robot@sprint-print.ru",
           pass: "sprint-print.ru",
         },
         tls: {
-          ciphers:'SSLv3'
-      }
+          ciphers: "SSLv3",
+        },
       });
       let result = await transporter.sendMail({
         from: "robot@sprint-print.ru",
@@ -221,7 +221,7 @@ class OrderController {
                 <table border="1">
                 ${findOrder.orderItems.map(
                   (el) =>
-                    `<tr><td style="padding: 20px"><h3>${el.orderCategory}</h3></td><td style="padding: 20px"><h3>${el.width}x${el.height}</h3></td><td style="padding: 20px"><h3>${el.count} штук</h3></td></tr>`
+                    `<tr><td style="padding: 20px"><h3>${el.orderCategory}</h3></td><td style="padding: 20px"><h3>${el.width}x${el.height}</h3></td><td style="padding: 20px"><h3>${el.count} шт</h3></td></tr>`
                 )}
                 </table>
                 `,
