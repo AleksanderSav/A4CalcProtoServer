@@ -190,6 +190,19 @@ class UserController {
   //     console.log(e);
   //   }
   // }
+  ///////////////////////////
+  async updateUserEmail(req,res){
+    try{
+      const { email,alias } = req.body;
+      const user = await User.findOne({ where: { alias } });
+      await user.update({
+        email: email,   
+      });
+      return res.json(user);  
+    }catch(e){
+      console.log(e)
+    }
+  }
 }
 
 module.exports = new UserController();
