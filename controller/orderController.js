@@ -194,14 +194,23 @@ class OrderController {
 
       ////////////send to email
       let transporter = nodemailer.createTransport({
-        service: "gmail",
+        // service: "gmail",
+        // auth: {
+        //   user: "a4yug1@gmail.com",
+        //   pass: "jpko tvpe bmpu prrx",
+        // },
+        host: 'mail.netangels.ru',
+        secure: false,
         auth: {
-          user: "a4yug1@gmail.com",
-          pass: "jpko tvpe bmpu prrx",
+          user: "robot@sprint-print.ru",
+          pass: "sprint-print.ru",
         },
+        tls: {
+          ciphers:'SSLv3'
+      }
       });
       let result = await transporter.sendMail({
-        from: "Типография А4-ЮГ",
+        from: "robot@sprint-print.ru",
         to: findOrderOwner.email,
         subject: `Статус заказа ${randomNumber} изменился  `,
         html: `<h3>Статус вашего заказа изменился на ${status}</h3> <br>
@@ -217,6 +226,7 @@ class OrderController {
                 </table>
                 `,
       });
+      console.log(result);
       res.json(findOrder);
     } catch (e) {
       console.log(e);
