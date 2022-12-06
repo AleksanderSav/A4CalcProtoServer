@@ -215,6 +215,19 @@ class UserController {
       console.log(e);
     }
   }
+  async updateUserAlias(req, res) {
+    try {
+      const { email,alias} = req.body;
+      const user = await User.findOne({ where: { email } });
+      
+      await user.update({
+        alias: alias,
+      });
+      return res.json(user);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 module.exports = new UserController();

@@ -17,4 +17,5 @@ router.get("/getAllCustomers", userController.getAllCustomers);
 //////////////////USER INFO PAGE////////////////////
 router.post("/updateUserEmail", userController.updateUserEmail);
 router.post("/updateUserPassword", userController.updateUserPassword);
+router.post("/updateUserAlias", userController.updateUserAlias);
 module.exports = router;
