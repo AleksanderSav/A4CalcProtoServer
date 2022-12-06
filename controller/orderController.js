@@ -236,14 +236,17 @@ class OrderController {
   }
   async searchOrder(req, res) {
     try {
-      const {word} = req.body
-      const result = await Order.findAndCountAll({
-        where: { owner: { [Op.iLike]: "%" + word + "%"} },
-        include:{model:OrderItem},
-        order: [["id", "DESC"]] 
+      const { word } = req.query;
+      // const offset = page * limit - limit; //Пока без пагинации
+      const findAll = await Order.findAndCountAll({
+        // limit,
+        // offset,
+        where: { owner: { [Op.iLike]: "%" + word + "%" } },
+        include: { model: OrderItem },
+        order: [["id", "DESC"]],
       });
-      
-      res.json(result);
+      const countPages = await Order.findAndCountAll({});
+      res.json({ findAll, countPages });
     } catch (e) {
       console.log(e);
     }
