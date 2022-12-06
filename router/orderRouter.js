@@ -7,4 +7,6 @@ router.post("/", orderController.createOrder);
 router.post("/file", orderController.fileUpload);
 router.get("/download", orderController.fileDownload);
 router.put("/changeStatus", orderController.changeOrderStatus);
+router.post("/searchOrder", orderController.searchOrder);
+
 module.exports = router;

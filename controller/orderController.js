@@ -2,6 +2,8 @@ const { Order, OrderItem, User } = require("../dbModels/dbModels");
 const path = require("path");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 class OrderController {
   async getAllOrders(req, res) {
@@ -232,6 +234,35 @@ class OrderController {
       console.log(e);
     }
   }
+  async searchOrder(req, res) {
+    try {
+      const {word} = req.body
+      const result = await Order.findAndCountAll({
+        where: { owner: { [Op.iLike]: "%" + word + "%"} },
+        include:{model:OrderItem},
+        order: [["id", "DESC"]] 
+      });
+      
+      res.json(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  // let { limit, page } = req.query;
+  // limit = limit || 5;
+  // page = page || 1;
+  // const offset = page * limit - limit;
+  // const findAll = await Order.findAndCountAll({
+  //   limit,
+  //   offset,
+  //   include: {
+  //     model: OrderItem,
+  //   },
+  //   order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
+  // });
+  // const countPages = await Order.findAndCountAll({});
+  // console.log(countPages);
+  // res.json({ findAll, countPages });
 }
 
 module.exports = new OrderController();
