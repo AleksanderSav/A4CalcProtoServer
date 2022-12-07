@@ -8,5 +8,6 @@ router.post("/file", orderController.fileUpload);
 router.get("/download", orderController.fileDownload);
 router.put("/changeStatus", orderController.changeOrderStatus);
 router.get("/searchOrder", orderController.searchOrder);
+router.get("/getOrdersByFilter", orderController.getOrdersByFilter);
 
 module.exports = router;

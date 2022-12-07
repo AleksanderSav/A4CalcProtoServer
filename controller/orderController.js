@@ -251,21 +251,24 @@ class OrderController {
       console.log(e);
     }
   }
-  // let { limit, page } = req.query;
-  // limit = limit || 5;
-  // page = page || 1;
-  // const offset = page * limit - limit;
-  // const findAll = await Order.findAndCountAll({
-  //   limit,
-  //   offset,
-  //   include: {
-  //     model: OrderItem,
-  //   },
-  //   order: [["id", "DESC"]], // сортировка из базы по id заказа по убыванию
-  // });
-  // const countPages = await Order.findAndCountAll({});
-  // console.log(countPages);
-  // res.json({ findAll, countPages });
+  async getOrdersByFilter(req, res) {
+    try {
+      const { filter } = req.query;
+      console.log(filter);
+      const findAll = await Order.findAndCountAll({
+        // limit,
+        // offset,
+        where: { orderStatus: filter },
+        include: { model: OrderItem },
+        order: [["id", "DESC"]],
+      });
+      const countPages = await Order.findAndCountAll({});
+      res.json({ findAll, countPages });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }
 
 module.exports = new OrderController();
