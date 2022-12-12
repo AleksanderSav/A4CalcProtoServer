@@ -268,7 +268,19 @@ class OrderController {
       console.log(e);
     }
   }
-
+  async changeOrderPrice(req, res) {
+    try {
+      const { newPrice, random } = req.body;
+      const orderForUpdate = await OrderItem.findOne({ where: { random } });
+      orderForUpdate.update({
+        totalCost: newPrice,
+        description: "Стоимость изменена администратором",
+      });
+      res.json(orderForUpdate);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 module.exports = new OrderController();

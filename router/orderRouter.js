@@ -9,5 +9,6 @@ router.get("/download", orderController.fileDownload);
 router.put("/changeStatus", orderController.changeOrderStatus);
 router.get("/searchOrder", orderController.searchOrder);
 router.get("/getOrdersByFilter", orderController.getOrdersByFilter);
+router.put("/changeOrderPrice", orderController.changeOrderPrice);
 
 module.exports = router;
