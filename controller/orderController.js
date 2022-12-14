@@ -281,6 +281,36 @@ class OrderController {
       console.log(e);
     }
   }
+  async changeOrderPrice(req, res) {
+    try {
+      const { newPrice, random } = req.body;
+      const orderForUpdate = await OrderItem.findOne({ where: { random } });
+      orderForUpdate.update({
+        totalCost: newPrice,
+        description: "Стоимость изменена администратором",
+      });
+      res.json(orderForUpdate);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async searchOrdersByUser(req, res) {
+    try {
+      const { alias } = req.query;
+      
+      const findAll = await Order.findAndCountAll({
+        // limit,
+        // offset,
+        where: { owner: alias },
+        include: { model: OrderItem },
+        order: [["id", "DESC"]],
+      });
+      const countPages = await Order.findAndCountAll({});
+      res.json({ findAll, countPages });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 module.exports = new OrderController();
