@@ -198,12 +198,7 @@ class OrderController {
       findOrder.update({ orderStatus: status });
 
       ////////////send to email
-      let transporter = nodemailer.createTransport({
-        // service: "gmail",
-        // auth: {
-        //   user: "a4yug1@gmail.com",
-        //   pass: "jpko tvpe bmpu prrx",
-        // },
+      let transporter = nodemailer.createTransport({      
         host: "mail.netangels.ru",
         secure: false,
         auth: {
@@ -310,6 +305,20 @@ class OrderController {
       });
       const countPages = await Order.findAndCountAll({});
       res.json({ findAll, countPages });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  async deleteOrder(req, res) {
+    try {
+      const { randomNumber } = req.body;
+      const find = await Order.findOne({
+        where: { randomNumber: randomNumber},
+        include: { model: OrderItem }
+    })
+    find.destroy(find,{include:{model: OrderItem }})
+      
+      res.json(find);
     } catch (e) {
       console.log(e);
     }
