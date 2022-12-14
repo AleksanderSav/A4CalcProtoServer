@@ -98,7 +98,10 @@ class OrderController {
             "." +
             ex
         );
-        fs.renameSync(el.filePath, path.resolve(orderDirPath, newName));
+        if (fs.existsSync(el.filePath)) {
+          fs.renameSync(el.filePath, path.resolve(orderDirPath, newName));
+        }
+        
         const orderItem = await OrderItem.create({
           width,
           height,
