@@ -131,7 +131,10 @@ class OrderController {
       const { material, width, height, count, random } = req.body;
       const name = `${material}_${width}x${height}_${count}шт__${random}`;
       const { file } = req.files;
-      console.log(req.files);
+      if (file === null){
+        res.json("file error")
+      }else{
+        console.log(req.files);
       const fileExtension = file.name.split(".")[1];
       await file.mv(
         path.resolve(
@@ -171,6 +174,9 @@ class OrderController {
       //   console.log("Папка успешно создана");
       // });
       res.json(adr);
+
+      }
+      
     } catch (e) {
       console.log(e);
     }
@@ -203,7 +209,7 @@ class OrderController {
         secure: false,
         auth: {
           user: "robot@sprint-print.ru",
-          pass: "sprint-print.ru",
+          pass: "jxBV0n3wy7Tx6gn6",
         },
         tls: {
           ciphers: "SSLv3",
