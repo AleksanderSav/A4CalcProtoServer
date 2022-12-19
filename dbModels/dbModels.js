@@ -25,6 +25,7 @@ const PriceList = sequelize.define("priceList", {
   priceCategory: { type: DataTypes.STRING },
   vinyl: { type: DataTypes.INTEGER },
   vinylPC: { type: DataTypes.INTEGER },
+  vinylPCLam: { type: DataTypes.INTEGER },
   banner: { type: DataTypes.INTEGER },
   photoPaper: { type: DataTypes.INTEGER },
 });
