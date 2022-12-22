@@ -64,7 +64,7 @@ class PriceController {
   }
   async updateWholesalePrice(req, res) {
     try {
-      const { vinyl, vinylPC, banner, photoPaper } = req.body;
+      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam,whiteVinylCut,colorVinylCut,cutOnly } = req.body;
       console.log(req.body);
       const updatePrice = await PriceList.findOne({
         where: { priceCategory: "wholesale" },
@@ -73,8 +73,12 @@ class PriceController {
       await updatePrice.update({
         vinyl: vinyl,
         vinylPC: vinylPC,
+        vinylPCLam: vinylPCLam,
         banner: banner,
         photoPaper: photoPaper,
+        whiteVinylCut:whiteVinylCut,
+        colorVinylCut:colorVinylCut,
+        cutOnly:cutOnly
       });
       return res.json(updatePrice);
     } catch (e) {
