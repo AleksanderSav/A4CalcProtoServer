@@ -41,8 +41,8 @@ class PriceController {
   }
   async updateRetailPrice(req, res) {
     try {
-      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam } = req.body;
-      console.log(vinyl, vinylPC, banner, photoPaper, vinylPCLam);
+      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam,whiteVinylCut,colorVinylCut,cutOnly } = req.body;
+      
       const updatePrice = await PriceList.findOne({
         where: { priceCategory: "retail" },
       });
@@ -53,6 +53,9 @@ class PriceController {
         vinylPCLam: vinylPCLam,
         banner: banner,
         photoPaper: photoPaper,
+        whiteVinylCut:whiteVinylCut,
+        colorVinylCut:colorVinylCut,
+        cutOnly:cutOnly
       });
       return res.json(updatePrice);
     } catch (e) {
