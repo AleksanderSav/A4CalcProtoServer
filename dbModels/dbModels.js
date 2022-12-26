@@ -30,7 +30,6 @@ const PriceList = sequelize.define("priceList", {
   photoPaper: { type: DataTypes.INTEGER },
   whiteVinylCut: { type: DataTypes.INTEGER },
   colorVinylCut: { type: DataTypes.INTEGER },
-  colorVinylCut: { type: DataTypes.INTEGER },
   cutOnly: { type: DataTypes.INTEGER },
 });
 //////////////////////////////
