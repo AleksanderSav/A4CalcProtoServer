@@ -41,7 +41,7 @@ class PriceController {
   }
   async updateRetailPrice(req, res) {
     try {
-      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam,whiteVinylCut,colorVinylCut,cutOnly } = req.body;
+      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam,whiteVinylCut,colorVinylCut,cutOnly,thermalVinyl } = req.body;
       
       const updatePrice = await PriceList.findOne({
         where: { priceCategory: "retail" },
@@ -55,7 +55,8 @@ class PriceController {
         photoPaper: photoPaper,
         whiteVinylCut:whiteVinylCut,
         colorVinylCut:colorVinylCut,
-        cutOnly:cutOnly
+        cutOnly:cutOnly,
+        thermalVinyl:thermalVinyl,  
       });
       return res.json(updatePrice);
     } catch (e) {
@@ -64,7 +65,7 @@ class PriceController {
   }
   async updateWholesalePrice(req, res) {
     try {
-      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam,whiteVinylCut,colorVinylCut,cutOnly } = req.body;
+      const { vinyl, vinylPC, banner, photoPaper, vinylPCLam,whiteVinylCut,colorVinylCut,cutOnly,thermalVinyl } = req.body;
       console.log(req.body);
       const updatePrice = await PriceList.findOne({
         where: { priceCategory: "wholesale" },
@@ -78,7 +79,8 @@ class PriceController {
         photoPaper: photoPaper,
         whiteVinylCut:whiteVinylCut,
         colorVinylCut:colorVinylCut,
-        cutOnly:cutOnly
+        cutOnly:cutOnly,
+        thermalVinyl:thermalVinyl,     
       });
       return res.json(updatePrice);
     } catch (e) {

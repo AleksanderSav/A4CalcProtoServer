@@ -31,6 +31,7 @@ const PriceList = sequelize.define("priceList", {
   whiteVinylCut: { type: DataTypes.INTEGER },
   colorVinylCut: { type: DataTypes.INTEGER },
   cutOnly: { type: DataTypes.INTEGER },
+  thermalVinyl: { type: DataTypes.INTEGER },
 });
 //////////////////////////////
 const Order = sequelize.define("order", {
