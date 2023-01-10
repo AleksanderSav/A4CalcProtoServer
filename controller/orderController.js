@@ -30,11 +30,11 @@ class OrderController {
 
   async createOrder(req, res) {
     try {
-      //TODO ПАДАЕТ ЕСЛИ НЕ ПРИХОДИТ ФАЙЛ С КЛИЕНТА
       const orderItems = req.body.data;
       const orderMessage = req.body.orderMessage;
 
       const number = (Math.random() * 100000).toFixed();
+      const folderOwnerName = orderItems[0].orderOwner;
       const date = new Date().toLocaleString();
       const findOrderOwner = await User.findOne({
         where: {
@@ -55,7 +55,7 @@ class OrderController {
         orderPaid: false,
         userId: findOrderOwner.id,
       });
-      const orderDirPath = path.resolve(__dirname, "..", "ORDERS", number);
+      const orderDirPath = path.resolve(__dirname, "..", "ORDERS", folderOwnerName +"_"+number);
       await fs.mkdirSync(orderDirPath, { recursive: true });
       ///////////////////////////////
       const findCurrentOrder = await Order.findOne({
